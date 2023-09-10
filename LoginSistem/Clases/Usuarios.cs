@@ -9,7 +9,7 @@ namespace LoginSistem.Clases
     public class Usuarios
     {
         public int UsuarioID { get; set; }
-        public string Nombre { get; set; }
+        public string? Nombre { get; set; }
         public string? Clave { get; set; }
         public int? IdPerfil { get; set; }
     }

@@ -1,4 +1,5 @@
 using LoginSistem.Clases;
+using LoginSistem.Forms;
 using Microsoft.Data.SqlClient;
 
 namespace LoginSistem
@@ -23,7 +24,7 @@ namespace LoginSistem
                 connetionString.Open();
 
                 //int clave = int.Parse(passwordValido);
-                string query = "SELECT Nombre, Clave FROM Usuarios WHERE Clave = " + passwordValido;
+                string query = "SELECT UsuarioID, Nombre, Clave, IdPerfil FROM Usuarios WHERE Clave = " + passwordValido;
 
                 SqlCommand comando = new SqlCommand(query, connetionString);
                 SqlDataReader registro = comando.ExecuteReader();
@@ -34,6 +35,7 @@ namespace LoginSistem
 
                     usuario.Nombre = (string)registro["Nombre"];
                     usuario.Clave = (string?)registro["Clave"];
+                    usuario.UsuarioID = (int)registro["UsuarioID"];
 
                     if (usuarioValido == usuario.Nombre && passwordValido == usuario.Clave)
                         esValido = true;
@@ -45,9 +47,10 @@ namespace LoginSistem
                         MenuPrincipal menuPrincipal = new MenuPrincipal();
 
                         menuPrincipal.txtUsuarioMenu.Text = usuarioValido;
-                        menuPrincipal.txtPasswordMenu.Text = passwordValido;
-
+                        menuPrincipal.txtPasswordMenu.PlaceholderText = passwordValido;
                         menuPrincipal.ShowDialog();
+
+                      
                     }
                     else
                     {
@@ -70,7 +73,7 @@ namespace LoginSistem
 
         private void btnCancelar_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
         }
 
         private void Form1_Load(object sender, EventArgs e)

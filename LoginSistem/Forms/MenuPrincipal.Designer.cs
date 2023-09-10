@@ -37,6 +37,7 @@
             pictureBox1 = new PictureBox();
             button1 = new Button();
             button2 = new Button();
+            btnEditarUsuario = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -117,11 +118,22 @@
             button2.Visible = false;
             button2.Click += button2_Click;
             // 
+            // btnEditarUsuario
+            // 
+            btnEditarUsuario.Location = new Point(425, 367);
+            btnEditarUsuario.Name = "btnEditarUsuario";
+            btnEditarUsuario.Size = new Size(113, 29);
+            btnEditarUsuario.TabIndex = 8;
+            btnEditarUsuario.Text = "Editar usuario";
+            btnEditarUsuario.UseVisualStyleBackColor = true;
+            btnEditarUsuario.Click += btnEditarUsuario_Click;
+            // 
             // MenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnEditarUsuario);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(pictureBox1);
@@ -147,5 +159,6 @@
         public TextBox txtUsuarioMenu;
         public TextBox txtPasswordMenu;
         private Button button2;
+        private Button btnEditarUsuario;
     }
 }
