@@ -1,3 +1,6 @@
+using LoginSistem.Clases;
+using Microsoft.Data.SqlClient;
+
 namespace LoginSistem
 {
     public partial class Form1 : Form
@@ -13,34 +16,56 @@ namespace LoginSistem
             var usuarioValido = txtUsuario.Text;
             var passwordValido = txtPassword.Text;
 
-            if (usuarioValido == "samuelramirez" && passwordValido == "1234")
-            {
-                esValido = true;
-            }
 
             if (usuarioValido != string.Empty && passwordValido != string.Empty)
             {
-                if (esValido)
+                SqlConnection connetionString = new SqlConnection(@"server=LEVHDLL; Database=Ventas; integrated security =True; TrustServerCertificate=True");
+                connetionString.Open();
+
+                //int clave = int.Parse(passwordValido);
+                string query = "SELECT Nombre, Clave FROM Usuarios WHERE Clave = " + passwordValido;
+
+                SqlCommand comando = new SqlCommand(query, connetionString);
+                SqlDataReader registro = comando.ExecuteReader();
+
+                if (registro.Read())
                 {
-                    MessageBox.Show("Usuario y contraseña son correctos!");
-                    this.Hide();
-                    MenuPrincipal menuPrincipal = new MenuPrincipal();
+                    Usuarios usuario = new Usuarios();
 
-                    menuPrincipal.txtUsuarioMenu.Text = usuarioValido;
-                    menuPrincipal.txtPasswordMenu.Text = passwordValido;
+                    usuario.Nombre = (string)registro["Nombre"];
+                    usuario.Clave = (string?)registro["Clave"];
 
-                    menuPrincipal.ShowDialog();
+                    if (usuarioValido == usuario.Nombre && passwordValido == usuario.Clave)
+                        esValido = true;
+
+                    if (esValido)
+                    {
+                        MessageBox.Show("Usuario y contraseña son correctos!");
+                        this.Hide();
+                        MenuPrincipal menuPrincipal = new MenuPrincipal();
+
+                        menuPrincipal.txtUsuarioMenu.Text = usuarioValido;
+                        menuPrincipal.txtPasswordMenu.Text = passwordValido;
+
+                        menuPrincipal.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Usuario y contraseña no son correctos!");
+
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("Usuario y contraseña no son correctos!");
-
+                    MessageBox.Show("Ups, ocurrio un error inesperado!");
                 }
+                connetionString.Close();
             }
             else
             {
-                MessageBox.Show("Ingrese los datos requeridos!");
+                   MessageBox.Show("Ingrese los datos requeridos!");
             }
+
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
