@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             btAtras = new Button();
             label3 = new Label();
             txtEditUsuarioClave = new TextBox();
@@ -37,6 +38,8 @@
             btnActualizar = new Button();
             label4 = new Label();
             cbPerfiles = new ComboBox();
+            perfilesBindingSource = new BindingSource(components);
+            ((System.ComponentModel.ISupportInitialize)perfilesBindingSource).BeginInit();
             SuspendLayout();
             // 
             // btAtras
@@ -120,6 +123,11 @@
             cbPerfiles.Name = "cbPerfiles";
             cbPerfiles.Size = new Size(291, 28);
             cbPerfiles.TabIndex = 18;
+            cbPerfiles.SelectedIndexChanged += cbPerfiles_SelectedIndexChanged;
+            // 
+            // perfilesBindingSource
+            // 
+            perfilesBindingSource.DataSource = typeof(Clases.Perfiles);
             // 
             // mdlEditarUsuario
             // 
@@ -137,6 +145,8 @@
             Controls.Add(label1);
             Name = "mdlEditarUsuario";
             Text = "Editar Usuario";
+            Load += mdlEditarUsuario_Load;
+            ((System.ComponentModel.ISupportInitialize)perfilesBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -152,5 +162,6 @@
         private Button btnActualizar;
         private Label label4;
         public ComboBox cbPerfiles;
+        private BindingSource perfilesBindingSource;
     }
 }

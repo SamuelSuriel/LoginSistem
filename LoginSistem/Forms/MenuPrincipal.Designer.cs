@@ -38,6 +38,7 @@
             button1 = new Button();
             button2 = new Button();
             btnEditarUsuario = new Button();
+            lblPerfil = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -66,7 +67,6 @@
             txtUsuarioMenu.Name = "txtUsuarioMenu";
             txtUsuarioMenu.Size = new Size(291, 34);
             txtUsuarioMenu.TabIndex = 2;
-            txtUsuarioMenu.TextChanged += txtUsuarioMenu_TextChanged;
             // 
             // txtPasswordMenu
             // 
@@ -128,11 +128,23 @@
             btnEditarUsuario.UseVisualStyleBackColor = true;
             btnEditarUsuario.Click += btnEditarUsuario_Click;
             // 
+            // lblPerfil
+            // 
+            lblPerfil.AutoSize = true;
+            lblPerfil.BackColor = Color.GhostWhite;
+            lblPerfil.Font = new Font("Modern No. 20", 18F, FontStyle.Bold, GraphicsUnit.Point);
+            lblPerfil.Location = new Point(451, 26);
+            lblPerfil.Name = "lblPerfil";
+            lblPerfil.Size = new Size(22, 31);
+            lblPerfil.TabIndex = 9;
+            lblPerfil.Text = " ";
+            // 
             // MenuPrincipal
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(lblPerfil);
             Controls.Add(btnEditarUsuario);
             Controls.Add(button2);
             Controls.Add(button1);
@@ -144,6 +156,7 @@
             Controls.Add(label1);
             Name = "MenuPrincipal";
             Text = "MenuPrincipal";
+            Load += MenuPrincipal_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -160,5 +173,6 @@
         public TextBox txtPasswordMenu;
         private Button button2;
         private Button btnEditarUsuario;
+        private Label lblPerfil;
     }
 }

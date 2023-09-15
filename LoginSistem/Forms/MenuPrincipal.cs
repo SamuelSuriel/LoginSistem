@@ -1,6 +1,5 @@
 ﻿using LoginSistem.Clases;
 using LoginSistem.Forms;
-using Microsoft.Data.SqlClient;
 
 namespace LoginSistem
 {
@@ -19,7 +18,7 @@ namespace LoginSistem
         private void button1_Click(object sender, EventArgs e)
         {
 
-            this.Close();
+            this.Hide();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -33,55 +32,46 @@ namespace LoginSistem
         {
             this.Hide();
 
-            var usuarioClave = txtPasswordMenu.Text;
-            //Abrir el modal
+            ////Abrir el modal
             mdlEditarUsuario mdlEditarUsuario = new mdlEditarUsuario();
             mdlEditarUsuario.ShowDialog();
 
-            Usuarios usuario = new Usuarios();
-
-            //var usuarioID = usuario.UsuarioID;
-
-            //Abrir coneccion a BD
-            SqlConnection connetionString = new SqlConnection(@"server=LEVHDLL; Database=Ventas; integrated security =True; TrustServerCertificate=True");
-            connetionString.Open();
-            string query = "SELECT UsuarioID, Nombre, Clave, IdPerfil FROM Usuarios WHERE Clave = " + usuarioClave;
-
-            SqlCommand comando = new SqlCommand(query, connetionString);
-            SqlDataReader registro = comando.ExecuteReader();
-
-            if (registro.Read())
+            int idPerfilUsuario = Global.GlobalVarPerfil;
+            string perfil = "";
+            if (idPerfilUsuario == 1)
             {
-                usuario.UsuarioID = (int)registro["UsuarioID"];
-                usuario.Nombre = (string)registro["Nombre"];
-                usuario.Clave = (string?)registro["Clave"];
-                usuario.IdPerfil = (int)registro["IdPerfil"];
-               
-                string perfil = "";
-                int idPerfil = (int)usuario.IdPerfil;
-                if (idPerfil == 1)
-                {
-                    perfil = "Administrador";
-                }
-                else if (idPerfil == 2)
-                {
-                    perfil = "Cajero";
-                }
-                else if (idPerfil == 3)
-                {
-                    perfil = "Vendedor";
-                }
-
-                mdlEditarUsuario.txtEditUsuarioNombre.Text = usuario.Nombre;
-                mdlEditarUsuario.txtEditUsuarioClave.PlaceholderText = usuario.Clave;
-                mdlEditarUsuario.cbPerfiles.Text = perfil;
-
-                connetionString.Close();
+                perfil = "Administrador";
             }
+            else if (idPerfilUsuario == 2)
             {
-                MessageBox.Show("Ups, ocurrio un error inesperado!");
+                perfil = "Cajero";
+            }
+            else if (idPerfilUsuario == 3)
+            {
+                perfil = "Vendedor";
+            }
+            //Asignar valores
+            mdlEditarUsuario.txtEditUsuarioNombre.Text = Global.GlobalVarNombre;
+            mdlEditarUsuario.txtEditUsuarioClave.Text = Global.GlobalVarClave;
+            mdlEditarUsuario.cbPerfiles.SelectedText = perfil;
+
+        }
+
+        private void MenuPrincipal_Load(object sender, EventArgs e)
+        {
+            int idPerfilUsuario = Global.GlobalVarPerfil;
+            if (idPerfilUsuario == 1)
+            {
+                lblPerfil.Text = "Administrador";
+            }
+            else if (idPerfilUsuario == 2)
+            {
+                lblPerfil.Text = "Cajero";
+            }
+            else if (idPerfilUsuario == 3)
+            {
+                lblPerfil.Text = "Vendedor";
             }
         }
-           
     }
 }

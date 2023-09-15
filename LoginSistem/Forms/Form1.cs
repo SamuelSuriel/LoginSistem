@@ -34,8 +34,11 @@ namespace LoginSistem
                     Usuarios usuario = new Usuarios();
 
                     usuario.Nombre = (string)registro["Nombre"];
-                    usuario.Clave = (string?)registro["Clave"];
+                    usuario.Clave = (string)registro["Clave"];
                     usuario.UsuarioID = (int)registro["UsuarioID"];
+                    usuario.IdPerfil = (int)registro["IdPerfil"];
+                   
+                    int idPerfil = (int)usuario.IdPerfil;
 
                     if (usuarioValido == usuario.Nombre && passwordValido == usuario.Clave)
                         esValido = true;
@@ -44,12 +47,17 @@ namespace LoginSistem
                     {
                         MessageBox.Show("Usuario y contraseña son correctos!");
                         this.Hide();
-                        MenuPrincipal menuPrincipal = new MenuPrincipal();
+                        MenuPrincipal menuPrincipal = new MenuPrincipal();                        
 
-                        menuPrincipal.txtUsuarioMenu.Text = usuarioValido;
-                        menuPrincipal.txtPasswordMenu.PlaceholderText = passwordValido;
+                        //Almacenamos las dos variables de sesion
+                        Global.GlobalVarId = usuario.UsuarioID;
+                        Global.GlobalVarNombre = usuario.Nombre;
+                        Global.GlobalVarClave = usuario.Clave;
+                        Global.GlobalVarPerfil = idPerfil;
+
+                        menuPrincipal.txtUsuarioMenu.Text = Global.GlobalVarNombre;
+                        menuPrincipal.txtPasswordMenu.PlaceholderText = Global.GlobalVarClave;
                         menuPrincipal.ShowDialog();
-
                       
                     }
                     else
