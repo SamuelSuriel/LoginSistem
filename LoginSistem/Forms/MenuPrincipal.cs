@@ -59,6 +59,7 @@ namespace LoginSistem
             lblPerfil.Text = Global.GlobalVarPerfil;
 
             int idPerfilUsuario = Global.GlobalVarIdPerfil;
+            mdlEditarUsuario mdlEditarUsuario = new mdlEditarUsuario();
             //Mostramos diferentes controles según el perfil del usuario logueado
             if (idPerfilUsuario == 1)
             {
@@ -66,18 +67,24 @@ namespace LoginSistem
                 dgvUsuarios.Visible = true;
                 btnComboForm.Visible = false;
                 dgvUsuarios.DataSource = MostrarProd();
+                mdlEditarUsuario.label4.Visible = true;
+                mdlEditarUsuario.cbPerfiles.Visible = true;
             }
             else if (idPerfilUsuario == 2)
             {
                 lbltituloPerfil.Visible = false;
                 dgvUsuarios.Visible = false;
                 btnComboForm.Visible = true;
+                mdlEditarUsuario.label4.Visible = false;
+                mdlEditarUsuario.cbPerfiles.Visible = false;
             }
             else if (idPerfilUsuario == 3)
             {
                 lbltituloPerfil.Visible = false;
                 dgvUsuarios.Visible = false;
                 btnComboForm.Visible = false;
+                mdlEditarUsuario.label4.Visible = false;
+                mdlEditarUsuario.cbPerfiles.Visible = false;
             }
         }
 

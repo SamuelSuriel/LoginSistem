@@ -26,7 +26,15 @@ namespace LoginSistem.Forms
         {
             txtEditUsuarioNombre.Text = Global.GlobalVarNombre;
             txtEditUsuarioClave.Text = Global.GlobalVarClave;
-            cbPerfiles.Text = Global.GlobalVarPerfil;
+            if (Global.GlobalVarIdPerfil == 1)
+            {
+                cbPerfiles.Text = Global.GlobalVarPerfil;
+            }
+            else
+            {
+                label4.Visible = false;
+                cbPerfiles.Visible = false;
+            }            
 
             txtEditUsuarioClave.MaxLength = 20;
             txtEditUsuarioNombre.MaxLength = 50;
