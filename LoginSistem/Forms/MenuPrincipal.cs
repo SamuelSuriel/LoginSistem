@@ -1,5 +1,8 @@
 ﻿using LoginSistem.Clases;
 using LoginSistem.Forms;
+using Microsoft.Data.SqlClient;
+using System.Data;
+using System.Windows.Forms;
 
 namespace LoginSistem
 {
@@ -10,18 +13,26 @@ namespace LoginSistem
             InitializeComponent();
         }
 
-        private void txtUsuarioMenu_TextChanged(object sender, EventArgs e)
-        {
-            txtUsuarioMenu.Text = txtUsuarioMenu.Text.Trim();
-        }
+        SqlDataReader leer;
+        DataTable tabla = new DataTable();
+        SqlCommand comando = new SqlCommand();
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-
             this.Hide();
+            //Limpiamos los datos en las variables globales
+            Global.GlobalVarId = 0;
+            Global.GlobalVarNombre = "";
+            Global.GlobalVarClave = "";
+            Global.GlobalVarIdPerfil = 0;
+            Global.GlobalVarPerfil = "";
+
+            //volvemos al formulario de login
+            Form1 form1 = new Form1();
+            form1.ShowDialog();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void btnComboForm_Click(object sender, EventArgs e)
         {
             this.Hide();
             ComboBoxForm comboBoxForm = new ComboBoxForm();
@@ -36,42 +47,73 @@ namespace LoginSistem
             mdlEditarUsuario mdlEditarUsuario = new mdlEditarUsuario();
             mdlEditarUsuario.ShowDialog();
 
-            int idPerfilUsuario = Global.GlobalVarPerfil;
-            string perfil = "";
-            if (idPerfilUsuario == 1)
-            {
-                perfil = "Administrador";
-            }
-            else if (idPerfilUsuario == 2)
-            {
-                perfil = "Cajero";
-            }
-            else if (idPerfilUsuario == 3)
-            {
-                perfil = "Vendedor";
-            }
-            //Asignar valores
+            //Asignar valores a los textbox y combo
             mdlEditarUsuario.txtEditUsuarioNombre.Text = Global.GlobalVarNombre;
             mdlEditarUsuario.txtEditUsuarioClave.Text = Global.GlobalVarClave;
-            mdlEditarUsuario.cbPerfiles.SelectedText = perfil;
+            mdlEditarUsuario.cbPerfiles.Text = Global.GlobalVarPerfil;
 
         }
 
         private void MenuPrincipal_Load(object sender, EventArgs e)
         {
-            int idPerfilUsuario = Global.GlobalVarPerfil;
+            lblPerfil.Text = Global.GlobalVarPerfil;
+
+            int idPerfilUsuario = Global.GlobalVarIdPerfil;
+            //Mostramos diferentes controles según el perfil del usuario logueado
             if (idPerfilUsuario == 1)
             {
-                lblPerfil.Text = "Administrador";
+                lbltituloPerfil.Visible = true;
+                dgvUsuarios.Visible = true;
+                btnComboForm.Visible = false;
+                dgvUsuarios.DataSource = MostrarProd();
             }
             else if (idPerfilUsuario == 2)
             {
-                lblPerfil.Text = "Cajero";
+                lbltituloPerfil.Visible = false;
+                dgvUsuarios.Visible = false;
+                btnComboForm.Visible = true;
             }
             else if (idPerfilUsuario == 3)
             {
-                lblPerfil.Text = "Vendedor";
+                lbltituloPerfil.Visible = false;
+                dgvUsuarios.Visible = false;
+                btnComboForm.Visible = false;
             }
+        }
+
+        private SqlConnection Conexion = new SqlConnection(@"server=LEVHDLL; Database=Ventas; integrated security =True; TrustServerCertificate=True");
+
+        public SqlConnection AbrirConexion()
+        {
+            if (Conexion.State == ConnectionState.Closed)
+                Conexion.Open();
+            return Conexion;
+        }
+
+        public SqlConnection CerrarConexion()
+        {
+            if (Conexion.State == ConnectionState.Open)
+                Conexion.Close();
+            return Conexion;
+        }
+        public DataTable Mostrar()
+        {
+
+            comando.Connection = AbrirConexion();
+            comando.CommandText = "MostrarUsuarios";
+            comando.CommandType = CommandType.StoredProcedure;
+            leer = comando.ExecuteReader();
+            tabla.Load(leer);
+            CerrarConexion();
+            return tabla;
+
+        }
+
+        public DataTable MostrarProd()
+        {
+            DataTable tabla = new DataTable();
+            tabla = Mostrar();
+            return tabla;
         }
     }
 }

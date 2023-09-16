@@ -42,11 +42,11 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Font = new Font("Modern No. 20", 18F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.ForeColor = Color.Blue;
-            label1.Location = new Point(146, 76);
+            label1.Font = new Font("Segoe UI Variable Display", 24F, FontStyle.Bold, GraphicsUnit.Point);
+            label1.ForeColor = Color.FromArgb(64, 64, 64);
+            label1.Location = new Point(249, 31);
             label1.Name = "label1";
-            label1.Size = new Size(188, 31);
+            label1.Size = new Size(275, 53);
             label1.TabIndex = 0;
             label1.Text = "Login System";
             // 
@@ -60,24 +60,28 @@
             // 
             // btnAcceder
             // 
-            btnAcceder.ForeColor = Color.Green;
+            btnAcceder.BackColor = Color.FromArgb(192, 192, 255);
+            btnAcceder.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            btnAcceder.ForeColor = SystemColors.ButtonHighlight;
             btnAcceder.Location = new Point(302, 354);
             btnAcceder.Name = "btnAcceder";
             btnAcceder.Size = new Size(133, 54);
             btnAcceder.TabIndex = 2;
             btnAcceder.Text = "Acceder";
-            btnAcceder.UseVisualStyleBackColor = true;
+            btnAcceder.UseVisualStyleBackColor = false;
             btnAcceder.Click += btnAcceder_Click;
             // 
             // btnCancelar
             // 
-            btnCancelar.ForeColor = Color.Crimson;
+            btnCancelar.BackColor = Color.FromArgb(255, 192, 192);
+            btnCancelar.Font = new Font("Segoe UI Black", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            btnCancelar.ForeColor = SystemColors.ButtonHighlight;
             btnCancelar.Location = new Point(62, 354);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(143, 54);
             btnCancelar.TabIndex = 3;
             btnCancelar.Text = "Cancelar";
-            btnCancelar.UseVisualStyleBackColor = true;
+            btnCancelar.UseVisualStyleBackColor = false;
             btnCancelar.Click += btnCancelar_Click;
             // 
             // txtUsuario
@@ -90,22 +94,22 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Font = new Font("Modern No. 20", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.ForeColor = Color.Blue;
+            label2.Font = new Font("Segoe UI Variable Display", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
+            label2.ForeColor = Color.Gray;
             label2.Location = new Point(62, 144);
             label2.Name = "label2";
-            label2.Size = new Size(111, 30);
+            label2.Size = new Size(97, 31);
             label2.TabIndex = 5;
             label2.Text = "Usuario";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Font = new Font("Modern No. 20", 16.2F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.ForeColor = Color.Blue;
+            label3.Font = new Font("Segoe UI Variable Display", 13.8F, FontStyle.Bold, GraphicsUnit.Point);
+            label3.ForeColor = Color.Gray;
             label3.Location = new Point(62, 215);
             label3.Name = "label3";
-            label3.Size = new Size(148, 30);
+            label3.Size = new Size(138, 31);
             label3.TabIndex = 6;
             label3.Text = "Contraseña";
             // 
@@ -134,7 +138,7 @@
             Controls.Add(label1);
             ForeColor = SystemColors.ActiveCaption;
             Name = "Form1";
-            Text = "Form1";
+            Text = "Login";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);

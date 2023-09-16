@@ -1,13 +1,6 @@
 ﻿using LoginSistem.Clases;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+using Microsoft.Data.SqlClient;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace LoginSistem.Forms
 {
@@ -17,15 +10,15 @@ namespace LoginSistem.Forms
         {
             InitializeComponent();
         }
-
+        SqlDataReader leer;
+        DataTable tabla = new DataTable();
+        SqlCommand comando = new SqlCommand();
         private void btAtras_Click(object sender, EventArgs e)
         {
             this.Hide();
             MenuPrincipal menuPrincipal = new MenuPrincipal();
-
             menuPrincipal.txtUsuarioMenu.Text = Global.GlobalVarNombre;
-            menuPrincipal.txtPasswordMenu.PlaceholderText = Global.GlobalVarClave;
-
+            menuPrincipal.lblPerfil.Text = Global.GlobalVarPerfil;
             menuPrincipal.ShowDialog();
         }
 
@@ -33,26 +26,91 @@ namespace LoginSistem.Forms
         {
             txtEditUsuarioNombre.Text = Global.GlobalVarNombre;
             txtEditUsuarioClave.Text = Global.GlobalVarClave;
+            cbPerfiles.Text = Global.GlobalVarPerfil;
+
+            txtEditUsuarioClave.MaxLength = 20;
+            txtEditUsuarioNombre.MaxLength = 50;
+        }
+
+        private void chkVerContraseña_CheckedChanged(object sender, EventArgs e)
+        {
+            txtEditUsuarioClave.PasswordChar = chkVerContraseña.Checked ? '*' : '\0';
 
         }
 
-        private void cbPerfiles_SelectedIndexChanged(object sender, EventArgs e)
+        private SqlConnection Conexion = new SqlConnection(@"server=LEVHDLL; Database=Ventas; integrated security =True; TrustServerCertificate=True");
+
+        public SqlConnection AbrirConexion()
         {
-            int idPerfilUsuario = Global.GlobalVarPerfil;
-            string perfil = "";
-            if (idPerfilUsuario == 1)
+            if (Conexion.State == ConnectionState.Closed)
+                Conexion.Open();
+            return Conexion;
+        }
+
+        public SqlConnection CerrarConexion()
+        {
+            if (Conexion.State == ConnectionState.Open)
+                Conexion.Close();
+            return Conexion;
+        }
+        public void Editar(int id, string nombre, string clave, int idPerfil)
+        {
+
+            comando.Connection = AbrirConexion();
+            comando.CommandText = "EditarUsuario";
+            comando.CommandType = CommandType.StoredProcedure;
+            comando.Parameters.AddWithValue("@id", id);
+            comando.Parameters.AddWithValue("@nombre", nombre);
+            comando.Parameters.AddWithValue("@clave", clave);
+            comando.Parameters.AddWithValue("@idPerfil", idPerfil);
+
+            comando.ExecuteNonQuery();
+
+            comando.Parameters.Clear();
+        }
+
+        public void EditarProd(int id, string nombre, string clave, int idPerfil)
+        {
+            Editar(Convert.ToInt32(id), nombre, clave, Convert.ToInt32(idPerfil));
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            int id = Global.GlobalVarId;
+            string name = txtEditUsuarioNombre.Text;
+            string passw = txtEditUsuarioClave.Text;
+            string perfil = cbPerfiles.Text;
+
+            if (perfil == "Administrador")
             {
-                perfil = "Administrador";
+                Global.GlobalVarIdPerfil = 1;
             }
-            else if (idPerfilUsuario == 2)
+            else if (perfil == "Cajero")
             {
-                perfil = "Cajero";
+                Global.GlobalVarIdPerfil = 2;
             }
-            else if (idPerfilUsuario == 3)
+            else if (perfil == "Vendedor")
             {
-                perfil = "Vendedor";
+                Global.GlobalVarIdPerfil = 3;
             }
-            cbPerfiles.SelectedText = perfil;
+            int idPerfil = Global.GlobalVarIdPerfil;
+
+            EditarProd(id, name, passw, idPerfil);
+
+            string query = "SELECT u.UsuarioID, u.Nombre, u.Clave, u.IdPerfil, p.Perfil FROM Usuarios u INNER JOIN Perfiles p on u.IdPerfil = p.IdPerfil WHERE UsuarioID = " + id;
+            comando = new SqlCommand(query, Conexion);
+            SqlDataReader registro = comando.ExecuteReader();
+
+            if (registro.Read())
+            {
+                Global.GlobalVarId = (int)registro["UsuarioID"];
+                Global.GlobalVarNombre = (string)registro["Nombre"];
+                Global.GlobalVarClave = (string)registro["Clave"];
+                Global.GlobalVarIdPerfil = (int)registro["IdPerfil"];
+                Global.GlobalVarPerfil = (string)registro["Perfil"];
+
+            }
+            MessageBox.Show("Se editó correctamente");
         }
     }
 }

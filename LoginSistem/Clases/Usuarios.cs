@@ -12,5 +12,6 @@ namespace LoginSistem.Clases
         public string Nombre { get; set; }
         public string Clave { get; set; }
         public int? IdPerfil { get; set; }
+        public string Perfil { get; set; }
     }
 }

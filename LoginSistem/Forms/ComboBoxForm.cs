@@ -1,4 +1,6 @@
-﻿namespace LoginSistem
+﻿using LoginSistem.Clases;
+
+namespace LoginSistem
 {
     public partial class ComboBoxForm : Form
     {
@@ -27,5 +29,14 @@
             BackColor = Color.FromArgb(rojo, verde, azul);
         }
 
+        private void btnVolver_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            MenuPrincipal menuPrincipal = new MenuPrincipal();
+
+            //volvemos a llenar los textbox del modal Menú principal
+            menuPrincipal.txtUsuarioMenu.Text = Global.GlobalVarNombre;
+            menuPrincipal.ShowDialog();
+        }
     }
 }

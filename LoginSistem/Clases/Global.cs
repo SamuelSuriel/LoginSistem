@@ -11,7 +11,8 @@ namespace LoginSistem.Clases
         private static int _globalVarId = 0;
         private static string _globalVarNombre = "";
         private static string _globalVarClave = "";
-        private static int _globalVarPerfil = 0;
+        private static int _globalVarIdPerfil = 0;
+        private static string _globalVarPerfil = "";
 
         public static int GlobalVarId
         {
@@ -30,7 +31,12 @@ namespace LoginSistem.Clases
             set { _globalVarClave = value; }
         }
 
-        public static int GlobalVarPerfil
+        public static int GlobalVarIdPerfil
+        {
+            get { return _globalVarIdPerfil; }
+            set { _globalVarIdPerfil = value; }
+        }
+        public static string GlobalVarPerfil
         {
             get { return _globalVarPerfil; }
             set { _globalVarPerfil = value; }
