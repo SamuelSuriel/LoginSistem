@@ -84,5 +84,13 @@ namespace LoginSistem
         {
 
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("¿Estás seguro de que quieres salir?", "Confirmación", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                e.Cancel = true; // Cancelar el cierre del formulario
+            }
+        }   
     }
 }

@@ -139,6 +139,7 @@
             ForeColor = SystemColors.ActiveCaption;
             Name = "Form1";
             Text = "Login";
+            FormClosing += Form1_FormClosing;
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
