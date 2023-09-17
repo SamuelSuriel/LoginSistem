@@ -75,7 +75,7 @@ namespace LoginSistem.Forms
 
             comando.ExecuteNonQuery();
 
-            comando.Parameters.Clear();
+            comando.Parameters.Clear();            
         }
 
         public void EditarProd(int id, string nombre, string clave, int idPerfil)
@@ -88,20 +88,22 @@ namespace LoginSistem.Forms
             int id = Global.GlobalVarId;
             string name = txtEditUsuarioNombre.Text;
             string passw = txtEditUsuarioClave.Text;
-            string perfil = cbPerfiles.Text;
+            //string perfil = cbPerfiles.Text;
+            int id_perfil = (int)cbPerfiles.SelectedValue;
+            Global.GlobalVarIdPerfil = (int)id_perfil;
 
-            if (perfil == "Administrador")
-            {
-                Global.GlobalVarIdPerfil = 1;
-            }
-            else if (perfil == "Cajero")
-            {
-                Global.GlobalVarIdPerfil = 2;
-            }
-            else if (perfil == "Vendedor")
-            {
-                Global.GlobalVarIdPerfil = 3;
-            }
+            //if (perfil == "Administrador")
+            //{
+            //    Global.GlobalVarIdPerfil = 1;
+            //}
+            //else if (perfil == "Cajero")
+            //{
+            //    Global.GlobalVarIdPerfil = 2;
+            //}
+            //else if (perfil == "Vendedor")
+            //{
+            //    Global.GlobalVarIdPerfil = 3;
+            //}
             int idPerfil = Global.GlobalVarIdPerfil;
 
             EditarProd(id, name, passw, idPerfil);
@@ -120,6 +122,8 @@ namespace LoginSistem.Forms
 
             }
             MessageBox.Show("Se editó correctamente");
+            CerrarConexion();
+
         }
 
         public void LlenarComboBox(ComboBox combo, string strSql, string id, string desc)

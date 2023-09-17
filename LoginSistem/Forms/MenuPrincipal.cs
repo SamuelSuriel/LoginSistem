@@ -97,7 +97,7 @@ namespace LoginSistem
             return Conexion;
         }
 
-        public SqlConnection CerrarConexion()
+       public SqlConnection CerrarConexion()
         {
             if (Conexion.State == ConnectionState.Open)
                 Conexion.Close();
