@@ -58,9 +58,9 @@ namespace LoginSistem
                         menuPrincipal.txtUsuarioMenu.Text = Global.GlobalVarNombre;
                         menuPrincipal.ShowDialog();
 
+                    } else {
+                        MessageBox.Show("Usuario o contraseña no son correctos!");
                     }
-                    else
-                        MessageBox.Show("Usuario y contraseña no son correctos!");
                 }
                 else
                 {

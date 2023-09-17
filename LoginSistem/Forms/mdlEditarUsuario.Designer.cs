@@ -136,7 +136,6 @@
             // cbPerfiles
             // 
             cbPerfiles.FormattingEnabled = true;
-            cbPerfiles.Items.AddRange(new object[] { "Administrador", "Cajero", "Vendedor" });
             cbPerfiles.Location = new Point(173, 300);
             cbPerfiles.Name = "cbPerfiles";
             cbPerfiles.Size = new Size(291, 28);

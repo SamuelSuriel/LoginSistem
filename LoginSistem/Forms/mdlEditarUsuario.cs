@@ -13,6 +13,8 @@ namespace LoginSistem.Forms
         SqlDataReader leer;
         DataTable tabla = new DataTable();
         SqlCommand comando = new SqlCommand();
+        SqlConnection Conexion = new SqlConnection(@"server=LEVHDLL; Database=Ventas; integrated security =True; TrustServerCertificate=True");
+
         private void btAtras_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -28,13 +30,14 @@ namespace LoginSistem.Forms
             txtEditUsuarioClave.Text = Global.GlobalVarClave;
             if (Global.GlobalVarIdPerfil == 1)
             {
+                LlenarComboBox(cbPerfiles, "Select * From Perfiles", "IdPerfil", "Perfil");
                 cbPerfiles.Text = Global.GlobalVarPerfil;
             }
             else
             {
                 label4.Visible = false;
                 cbPerfiles.Visible = false;
-            }            
+            }
 
             txtEditUsuarioClave.MaxLength = 20;
             txtEditUsuarioNombre.MaxLength = 50;
@@ -45,8 +48,6 @@ namespace LoginSistem.Forms
             txtEditUsuarioClave.PasswordChar = chkVerContraseña.Checked ? '*' : '\0';
 
         }
-
-        private SqlConnection Conexion = new SqlConnection(@"server=LEVHDLL; Database=Ventas; integrated security =True; TrustServerCertificate=True");
 
         public SqlConnection AbrirConexion()
         {
@@ -119,6 +120,15 @@ namespace LoginSistem.Forms
 
             }
             MessageBox.Show("Se editó correctamente");
+        }
+
+        public void LlenarComboBox(ComboBox combo, string strSql, string id, string desc)
+        {
+            SqlDataAdapter da = new SqlDataAdapter(strSql, Conexion);
+            da.Fill(tabla);
+            combo.ValueMember = id;
+            combo.DisplayMember = desc;
+            combo.DataSource = tabla;
         }
     }
 }
