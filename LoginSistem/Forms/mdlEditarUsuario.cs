@@ -13,7 +13,7 @@ namespace LoginSistem.Forms
         SqlDataReader leer;
         DataTable tabla = new DataTable();
         SqlCommand comando = new SqlCommand();
-        SqlConnection Conexion = new SqlConnection(@"server=LEVHDLL; Database=Ventas; integrated security =True; TrustServerCertificate=True");
+        SqlConnection Conexion = new SqlConnection(@"server=SRSDELLI5; Database=Ventas; integrated security =True; TrustServerCertificate=True");
 
         private void btAtras_Click(object sender, EventArgs e)
         {

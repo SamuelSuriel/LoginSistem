@@ -88,7 +88,7 @@ namespace LoginSistem
             }
         }
 
-        private SqlConnection Conexion = new SqlConnection(@"server=LEVHDLL; Database=Ventas; integrated security =True; TrustServerCertificate=True");
+        private SqlConnection Conexion = new SqlConnection(@"server=SRSDELLI5; Database=Ventas; integrated security =True; TrustServerCertificate=True");
 
         public SqlConnection AbrirConexion()
         {

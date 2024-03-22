@@ -20,7 +20,7 @@ namespace LoginSistem
             //validamos si los datos son correctos
             if (usuarioValido != string.Empty && passwordValido != string.Empty)
             {
-                SqlConnection connetionString = new SqlConnection(@"server=LEVHDLL; Database=Ventas; integrated security =True; TrustServerCertificate=True");
+                SqlConnection connetionString = new SqlConnection(@"server=SRSDELLI5; Database=Ventas; integrated security =True; TrustServerCertificate=True");
                 connetionString.Open();
 
                 //Query que trae los datos desde la base de datos
